@@ -26,8 +26,7 @@ import 'object.dart';
 import 'outline.dart';
 import 'page_label.dart';
 import 'page_list.dart';
-import 'pdfa/pdfa_attached_files.dart';
-import 'pdfa/pdfa_color_profile.dart';
+import 'pdf_a_3b.dart';
 
 /// Pdf Catalog object
 class PdfCatalog extends PdfObject<PdfDict> {
@@ -105,6 +104,12 @@ class PdfCatalog extends PdfObject<PdfDict> {
     // the Names object
     if (names != null) {
       params['/Names'] = names!.ref();
+    }
+
+    // ??? what to do, if /Names is already occupied?
+    if (attached != null && attached!.isNotEmpty) {
+      params['/Names'] = attached!.catalogNames();
+      params['/AF'] = attached!.catalogAF();
     }
 
     // the PageLabels object

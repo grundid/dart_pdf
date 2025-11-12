@@ -304,6 +304,12 @@ abstract class PdfAnnotBase {
     if (flags.isNotEmpty) {
       params['/F'] = PdfNum(flagValue);
     }
+    else {
+      // for pdfa compliance
+      params['/F'] = PdfNum(
+          4 // printable
+      );
+    }
 
     if (date != null) {
       params['/M'] = PdfString.fromDate(date!);
